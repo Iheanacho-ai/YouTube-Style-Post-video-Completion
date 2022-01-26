@@ -1,14 +1,26 @@
 <template>
   <div>
-    <!-- <h2>The live started at </h2> -->
+
     <video 
     id= "video-player"
     class="cld-video-player"
     >
     </video> 
     <div class="overlay"  v-if = 'overlay'>
-     
-      The live has ended. 
+      <div class="cards">
+        <a href="https://www.youtube.com/watch?v=1wkPMUZ9vX4">
+          <div :style="{ 'backgroundImage': 'url(https://images.pexels.com/photos/15286/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500)' }"></div>
+        </a>
+        <a href="https://www.youtube.com/watch?v=IUN664s7N-c">
+          <div :style="{ 'backgroundImage': 'url(https://images.pexels.com/photos/3408744/pexels-photo-3408744.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500)' }"></div>
+        </a>
+        <a href="https://www.youtube.com/watch?v=Faow3SKIzq0">
+          <div :style="{ 'backgroundImage': 'url(https://images.pexels.com/photos/572897/pexels-photo-572897.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500)' }"></div>
+        </a>
+        <a href="https://www.youtube.com/watch?v=7bOptq-NPJQ">
+          <div :style="{ 'backgroundImage': 'url(https://images.pexels.com/photos/624015/pexels-photo-624015.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500)' }"></div>
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -19,19 +31,8 @@
       return{
         cld: null,
         player: null,
-        video: "videoplayback_1_pr2hzi",
-        duration: null,
-        startTime: 1642870132613,
-        currentTime: null,
-        liveStartTime: null,
-        overlay: false,
-        controls: true
-      }
-    },
-    methods: {
-      onEnded(){
-        this.overlay = true;
-        this.controls = false
+        video: "production_ID_4456999_gr6iy4",
+        overlay: false
       }
     },
 
@@ -42,48 +43,20 @@
       })
       this.player = this.cld.videoPlayer(
         'video-player', {
-          controls: this.controls,
-          autoplay: true
+          controls: true
         }
       )
 
       this.player.source(this.video);
 
-      // Gets the duration of the video
-
-      this.player.on('loadeddata', () => {
-        this.duration = this.player.duration(); 
-      })
-
-      // Gets the current time at which the user opens the video
-
-      const d = new Date ()
-      this.currentTime = d.getTime();
-
-      // Gets the difference betwewn when the user opened the video and when the video started
-
-      const difference = this.currentTime - this.startTime
-
-      // Changes the time from millisecond to seconds.
-      this.liveStartTime = difference / 1000;
-      
-
-      // Plays the video from a particular time
-
-      this.player.on('play', ()=> {
-       this.player.currentTime(this.liveStartTime);
-
-      })
-
-      // Controls the overlay
-
       this.player.on('ended', ()=> {
-        this.onEnded()
+        this.overlay= true;
+      })
+      this.player.on('play', ()=> {
+        this.overlay = false;
       })
 
-      if (this.liveStartTime > this.duration){
-        this.onEnded()
-      }
+      
 
      
       
@@ -103,12 +76,9 @@ div{
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Nunito', sans-serif;
 
 }
-h2{
-  font-size: 20px;
-}
+
 .cld-video-player{
   width: 500px;
   height: 500px;
@@ -118,11 +88,27 @@ h2{
   height: 500px;
   position: absolute;
   background-color: rgba(0,0,0, 0.70);
-  color: #fff;
-  font-size: 16px;
-  top: 7px;
-  bottom: 0px;
+
   
+}
+.cards{
+  width: 80%;
+  height: 80%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+
+}
+.cards a{
+  width: 100%;
+  height: 100%;
+}
+.cards div{
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 
